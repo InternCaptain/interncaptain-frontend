@@ -9,7 +9,6 @@
 		"format": "sort-package-json && prettier --write \"./**/*.(ts|tsx|json|css|html)\"",
 		"start:dev": "react-scripts start",
 		"start": "serve -s build",
-		"prestart": "npm run build",
 		"test": "react-scripts test"
 	},
 	"browserslist": {
