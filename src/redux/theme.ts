@@ -13,7 +13,7 @@ const initialThemeState = {
 
 export const setTheme = (theme: Theme) => ({ type: SET_THEME, theme });
 
-const theme = (state = initialThemeState, action: any) => {
+const themeReducer = (state = initialThemeState, action: any) => {
 	const { type, theme } = action;
 	if (type === SET_THEME) {
 		return {
@@ -25,4 +25,4 @@ const theme = (state = initialThemeState, action: any) => {
 	}
 };
 
-export default theme;
+export default themeReducer;
