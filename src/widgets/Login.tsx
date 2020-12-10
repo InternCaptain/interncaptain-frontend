@@ -30,8 +30,8 @@ const Login: React.FC<LoginProperties> = (properties) => {
 
 	const { onSubmit } = properties;
 
-	const [email, setEmail] = useState('tzutzu@cs');
-	const [password, setPassword] = useState('p');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 	const [error, setError] = useState(properties.error);
 
 	useEffect(() => {
