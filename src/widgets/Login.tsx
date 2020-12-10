@@ -1,11 +1,14 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { LoginError } from '../types/errors';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { Button, Grid, Link, TextField } from '@material-ui/core';
-import { Credentials } from '../types/requests';
+import { LoginVars } from '../api/mutation/LoginMutation';
+import ServerError from '../api/types/ServerError';
+import AppState from '../redux/AppState';
+import { login } from '../redux/user';
+import { connect } from 'react-redux';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
 	createStyles({
 		form: {
 			width: '100%'
@@ -18,8 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface LoginProperties {
-	onSubmit: (credentials: Credentials) => void;
-	error?: LoginError;
+	onSubmit: (credentials: LoginVars) => void;
+	error?: ServerError;
 }
 
 const Login: React.FC<LoginProperties> = (properties) => {
@@ -27,8 +30,8 @@ const Login: React.FC<LoginProperties> = (properties) => {
 
 	const { onSubmit } = properties;
 
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [email, setEmail] = useState('tzutzu@cs');
+	const [password, setPassword] = useState('p');
 	const [error, setError] = useState(properties.error);
 
 	useEffect(() => {
@@ -46,7 +49,10 @@ const Login: React.FC<LoginProperties> = (properties) => {
 	};
 
 	const handleSubmit = () => {
-		onSubmit({ email: email.trim(), password: password.trim() });
+		onSubmit({
+			email: email.trim(),
+			password: password.trim()
+		});
 	};
 
 	return (
@@ -54,6 +60,7 @@ const Login: React.FC<LoginProperties> = (properties) => {
 			<form className={classes.form}>
 				<TextField
 					onChange={handleChangeEmail}
+					value={email}
 					label={'Email'}
 					variant={'outlined'}
 					margin={'normal'}
@@ -64,6 +71,7 @@ const Login: React.FC<LoginProperties> = (properties) => {
 				/>
 				<TextField
 					onChange={handleChangePassword}
+					value={password}
 					label={'Password'}
 					variant={'outlined'}
 					type={'password'}
@@ -93,4 +101,12 @@ const Login: React.FC<LoginProperties> = (properties) => {
 	);
 };
 
-export default Login;
+const mapStateToProps = (state: AppState) => ({
+	error: state.userState.error
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+	onSubmit: (credentials: LoginVars) => dispatch(login(credentials))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

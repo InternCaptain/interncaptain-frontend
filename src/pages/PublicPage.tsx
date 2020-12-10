@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { createStyles, Grid, Paper, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
-import ThemePicker from '../widgets/ThemePicker';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -35,7 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		image: {
 			height: '100vh',
-			width: '100%'
+			width: '100%',
+			filter: theme.palette.type === 'dark' ? 'invert(100%) hue-rotate(75deg) contrast(80%) brightness(1.6)' : ''
 		},
 		card: {
 			backgroundColor: theme.palette.background.paper,
@@ -76,7 +76,6 @@ const PublicPage: React.FC = (properties: any) => {
 					</div>
 					{children}
 				</Paper>
-				<ThemePicker />
 			</Grid>
 		</Grid>
 	);

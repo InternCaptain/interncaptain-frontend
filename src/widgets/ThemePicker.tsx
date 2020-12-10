@@ -2,11 +2,10 @@ import { Icon, IconButton, Paper, Theme, useTheme } from '@material-ui/core';
 import React, { useState } from 'react';
 import { setTheme } from '../redux/theme';
 import { connect } from 'react-redux';
-import lightTheme from '../themes/lightTheme';
-import darkTheme from '../themes/darkTheme';
 import { createStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import themes from '../themes';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
 	createStyles({
 		wrapper: {
 			display: 'flex'
@@ -38,8 +37,8 @@ const ThemePickerButton: React.FC<ThemePickerButtonProperties> = (properties) =>
 };
 
 interface ThemePickerProperties {
-	onSelectTheme: (theme: Theme) => void;
-	themes: Theme[];
+	onSelectTheme: (theme: string) => void;
+	themes: { [key: string]: Theme };
 }
 
 const ThemePicker: React.FC<ThemePickerProperties> = (properties) => {
@@ -59,12 +58,12 @@ const ThemePicker: React.FC<ThemePickerProperties> = (properties) => {
 			<Paper className={classes.picker}>
 				{visible ? (
 					<div className={classes.wrapper}>
-						{themes.map((theme) => (
+						{Object.keys(themes).map((themeName) => (
 							<ThemePickerButton
-								key={`${theme.palette.primary.main}`}
+								key={themeName}
 								currentTheme={currentTheme}
-								theme={theme}
-								onClick={() => onSelectTheme(theme)}
+								theme={themes[themeName]}
+								onClick={() => onSelectTheme(themeName)}
 							/>
 						))}
 						<IconButton color="primary" onClick={handleClick}>
@@ -81,8 +80,8 @@ const ThemePicker: React.FC<ThemePickerProperties> = (properties) => {
 	);
 };
 
-const mapStateToProps = (state: any) => ({
-	themes: [lightTheme, darkTheme]
+const mapStateToProps = () => ({
+	themes
 });
 const mapDispatchToProps = (dispatch: any) => ({
 	onSelectTheme: (theme: any) => dispatch(setTheme(theme))
