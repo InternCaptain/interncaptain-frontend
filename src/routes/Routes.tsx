@@ -23,7 +23,7 @@ const Routes: React.FC<RoutesProperties> = (properties) => {
 		if (isTokenPresent && currentUser === undefined) {
 			getCurrentUser();
 		}
-	}, [currentUser, isTokenPresent]);
+	}, [currentUser, isTokenPresent, getCurrentUser]);
 
 	if (isTokenPresent) {
 		if (currentUser === undefined) {
