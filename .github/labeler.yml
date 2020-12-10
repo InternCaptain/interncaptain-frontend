@@ -1,0 +1,17 @@
+graphql:
+  - src/api
+
+widgets:
+  - src/widgets
+
+redux:
+  - src/redux
+
+theming:
+  - src/themes
+
+dependecies:
+  - package.json
+
+workflows:
+  - .github/**/*
