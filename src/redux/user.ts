@@ -68,7 +68,7 @@ export const login = (credentials: LoginVars) => {
 			.then((response) => {
 				const { data } = response;
 				if (data) {
-					dispatch(setCurrentUser(data.login.currentUser))
+					dispatch(setCurrentUser(data.login.currentUser));
 					dispatch(setToken(data.login.token));
 				}
 			})
@@ -95,7 +95,8 @@ export const fetchCurrentUser = () => {
 				if (data) {
 					dispatch(setCurrentUser(data.currentUser));
 				}
-			}).catch(console.log);
+			})
+			.catch(console.log);
 	};
 };
 
@@ -108,7 +109,7 @@ const userReducer = (state: UserState = initialUserState, action: UserAction) =>
 				users
 			};
 		case SET_TOKEN:
-			localStorage.setItem("token", token!!);
+			localStorage.setItem('token', token!!);
 			return {
 				...state,
 				token
@@ -122,7 +123,7 @@ const userReducer = (state: UserState = initialUserState, action: UserAction) =>
 			return {
 				...state,
 				currentUser: user
-			}
+			};
 		default:
 			return state;
 	}

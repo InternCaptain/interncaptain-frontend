@@ -3,7 +3,7 @@ import { User } from '../types/User';
 
 const LoginMutation = gql`
 	mutation login($email: String!, $password: String!) {
-		login(input: { email: $email, password: $password }) {
+		login(email: $email, password: $password) {
 			token
 			currentUser {
 				id
@@ -19,7 +19,7 @@ const LoginMutation = gql`
 export interface LoginData {
 	login: {
 		token: string;
-		currentUser: User
+		currentUser: User;
 	};
 }
 

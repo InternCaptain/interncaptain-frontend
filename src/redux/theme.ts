@@ -13,7 +13,7 @@ export interface ThemeAction extends Action {
 
 function getTheme(): keyof typeof themes {
 	let theme = localStorage.getItem('theme');
-	if(theme !== null && theme in themes){
+	if (theme !== null && theme in themes) {
 		return theme as keyof typeof themes;
 	} else {
 		return 'lightTheme';

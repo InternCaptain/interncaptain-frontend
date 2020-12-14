@@ -1,7 +1,7 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 import React from 'react';
 import Login from '../widgets/Login';
-import PublicPage from '../pages/PublicPage';
+import PublicPage from '../widgets/PublicPage';
 
 const PublicRoutes = () => {
 	return (

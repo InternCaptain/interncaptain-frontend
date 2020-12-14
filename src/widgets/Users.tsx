@@ -17,12 +17,12 @@ const Users = (properties: UsersProperties) => {
 		return <button onClick={onClick}>Fetch!</button>;
 	} else {
 		return (
-			<div style={{display:'flex'}}>
+			<div style={{ display: 'flex' }}>
 				Users:
 				{users.map((user) => (
-					<div key={user.id} style={{textAlign: 'center'}}>
+					<div key={user.id} style={{ textAlign: 'center' }}>
 						{user.firstName} {user.lastName}
-						<UserWidget backgroundImage={user.profilePicture!!}/>
+						<UserWidget backgroundImage={user.profilePicture!!} />
 					</div>
 				))}
 			</div>

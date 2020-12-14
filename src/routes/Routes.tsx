@@ -16,7 +16,6 @@ interface RoutesProperties {
 }
 
 const Routes: React.FC<RoutesProperties> = (properties) => {
-
 	const { currentUser, isTokenPresent, getCurrentUser } = properties;
 
 	useEffect(() => {
@@ -29,11 +28,18 @@ const Routes: React.FC<RoutesProperties> = (properties) => {
 		if (currentUser === undefined) {
 			return <LinearProgress />;
 		} else {
-			return <Router history={history}><PrivateRoutes /></Router>;
-
+			return (
+				<Router history={history}>
+					<PrivateRoutes />
+				</Router>
+			);
 		}
 	} else {
-		return <Router history={history}><PublicRoutes /></Router>;
+		return (
+			<Router history={history}>
+				<PublicRoutes />
+			</Router>
+		);
 	}
 };
 
