@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from '../api/types/User';
+import User from '../api/types/User';
 import AppState from '../redux/AppState';
 import { fetchUsers } from '../redux/user';
 import { connect } from 'react-redux';

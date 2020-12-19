@@ -2,26 +2,25 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { Button, Grid, Link, TextField } from '@material-ui/core';
-import { LoginVars } from '../api/mutation/LoginMutation';
 import ServerError from '../api/types/ServerError';
 import AppState from '../redux/AppState';
 import { login } from '../redux/user';
 import { connect } from 'react-redux';
+import PasswordField from './PasswordField';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme) =>
 	createStyles({
 		form: {
 			width: '100%'
 		},
 		submit: {
 			margin: '24px 0 16px'
-		},
-		link: {}
+		}
 	})
 );
 
 export interface LoginProperties {
-	onSubmit: (credentials: LoginVars) => void;
+	onSubmit: (email: string, password: string) => void;
 	error?: ServerError;
 }
 
@@ -40,19 +39,28 @@ const Login: React.FC<LoginProperties> = (properties) => {
 
 	const handleChangeEmail = (event: any) => {
 		setEmail(event.target.value);
-		setError(undefined);
+		if (error && error.cause === 'email') setError(undefined);
 	};
 
 	const handleChangePassword = (event: any) => {
 		setPassword(event.target.value);
-		setError(undefined);
+		if (error && error.cause === 'password') setError(undefined);
 	};
 
 	const handleSubmit = () => {
-		onSubmit({
-			email: email.trim(),
-			password: password.trim()
-		});
+		if (email === '') {
+			setError({
+				cause: 'email',
+				message: 'Please type your email'
+			});
+		} else if (password === '') {
+			setError({
+				cause: 'password',
+				message: 'Please type your password'
+			});
+		} else {
+			onSubmit(email.trim(), password);
+		}
 	};
 
 	return (
@@ -66,10 +74,9 @@ const Login: React.FC<LoginProperties> = (properties) => {
 					margin={'normal'}
 					error={error?.cause === 'email'}
 					helperText={error?.cause === 'email' ? error.message : undefined}
-					required
 					fullWidth
 				/>
-				<TextField
+				<PasswordField
 					onChange={handleChangePassword}
 					value={password}
 					label={'Password'}
@@ -78,7 +85,6 @@ const Login: React.FC<LoginProperties> = (properties) => {
 					margin={'normal'}
 					error={error?.cause === 'password'}
 					helperText={error?.cause === 'password' ? error.message : undefined}
-					required
 					fullWidth
 				/>
 				<Button onClick={handleSubmit} color="primary" variant="contained" className={classes.submit} fullWidth>
@@ -93,7 +99,7 @@ const Login: React.FC<LoginProperties> = (properties) => {
 				</Grid>
 				<Grid item>
 					<Link component={RouterLink} to={'/register'} underline={'none'}>
-						{'Register'}
+						{'Create an account'}
 					</Link>
 				</Grid>
 			</Grid>
@@ -106,7 +112,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-	onSubmit: (credentials: LoginVars) => dispatch(login(credentials))
+	onSubmit: (email: string, password: string) => dispatch(login(email, password))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

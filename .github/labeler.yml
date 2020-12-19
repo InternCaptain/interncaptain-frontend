@@ -1,14 +1,14 @@
 graphql:
-  - src/api
+  - src/api/**/*
 
 widgets:
-  - src/widgets
+  - src/widgets/**/*
 
 redux:
-  - src/redux
+  - src/redux/**/*
 
 theming:
-  - src/themes
+  - src/themes/**/*
 
 dependecies:
   - package.json

@@ -1,32 +1,13 @@
 import React from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import { createStyles, Grid, Paper, useMediaQuery } from '@material-ui/core';
-import clsx from 'clsx';
+import AppTitle from './AppTitile';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		page: {
 			height: '100vh',
 			backgroundColor: theme.palette.background.default
-		},
-		titleWrapper: {
-			display: 'flex',
-			alignItems: 'center',
-			placeContent: 'center'
-		},
-		titlePrimary: {
-			color: theme.palette.primary.main
-		},
-		titleSecondary: {
-			color: theme.palette.text.secondary
-		},
-		title: {
-			fontFamily: "'Permanent Marker', cursive",
-			fontSize: '50px'
-		},
-		titleIcon: {
-			height: '70px',
-			width: '70px'
 		},
 		left: {
 			backgroundColor: theme.palette.background.default,
@@ -35,19 +16,31 @@ const useStyles = makeStyles((theme: Theme) =>
 		image: {
 			height: '100vh',
 			width: '100%',
-			filter: theme.palette.type === 'dark' ? 'invert(100%) hue-rotate(75deg) contrast(80%) brightness(1.6)' : ''
+			filter: theme.palette.type === 'dark' ? 'invert(100%) hue-rotate(75deg) contrast(80%) brightness(1.6)' : '',
+			[theme.breakpoints.down('sm')]: {
+				top: '50%',
+				left: '50%',
+				transform: 'translate(-50%, -50%)',
+				position: 'absolute'
+			}
+		},
+		right: {
+			position: 'relative'
 		},
 		card: {
 			backgroundColor: theme.palette.background.paper,
-			padding: '35px',
+			padding: '25px',
 			top: '50%',
-			transform: 'translate(0, -60%)',
-			position: 'absolute'
-		},
-		right: {
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center'
+			left: '50%',
+			transform: 'translate(-50%, -50%)',
+			position: 'absolute',
+			width: '50%',
+			[theme.breakpoints.down('sm')]: {
+				width: '70%'
+			},
+			[theme.breakpoints.down('xs')]: {
+				width: '100%'
+			}
 		}
 	})
 );
@@ -69,11 +62,7 @@ const PublicPage: React.FC = (properties: any) => {
 			) : null}
 			<Grid item xs={12} sm={12} md={6} className={classes.right}>
 				<Paper className={classes.card}>
-					<div className={classes.titleWrapper}>
-						<div className={clsx(classes.title, classes.titlePrimary)}>Intern</div>
-						<div className={clsx(classes.title, classes.titleSecondary)}>Captain</div>
-						<img className={classes.titleIcon} src={'captain.png'} alt="Captain" />
-					</div>
+					<AppTitle fontSize={40} />
 					{children}
 				</Paper>
 			</Grid>

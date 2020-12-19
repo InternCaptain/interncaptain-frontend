@@ -1,4 +1,4 @@
-import { User } from '../api/types/User';
+import User, { UserForCreate } from '../api/types/User';
 import { Action } from 'redux';
 import GetUsersQuery, { GetUsersData, GetUsersVars } from '../api/query/GetUsersQuery';
 import { SortOperationKind } from '../api/types/Connection';
@@ -6,9 +6,11 @@ import client from '../api/client';
 import LoginMutation, { LoginData, LoginVars } from '../api/mutation/LoginMutation';
 import ServerError from '../api/types/ServerError';
 import GetCurrentUserQuery, { GetCurrentUserData, GetCurrentUserVars } from '../api/query/GetCurrentUserQuery';
+import RegisterMutation, { RegisterData, RegisterVars } from '../api/mutation/RegisterMutation';
 
 const SET_USERS = 'SET_USERS';
 const SET_TOKEN = 'SET_TOKEN';
+const CLEAR_TOKEN = 'CLEAR_TOKEN';
 const SET_ERROR = 'SET_ERROR';
 const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
@@ -33,7 +35,8 @@ const initialUserState = {
 
 export const setUsers = (users: User[]) => ({ type: SET_USERS, users });
 export const setToken = (token: string) => ({ type: SET_TOKEN, token });
-export const setLoginError = (error: ServerError) => ({ type: SET_ERROR, error });
+export const clearToken = () => ({ type: CLEAR_TOKEN });
+export const setError = (error: ServerError) => ({ type: SET_ERROR, error });
 export const setCurrentUser = (user: User) => ({ type: SET_CURRENT_USER, user });
 
 export const fetchUsers = () => {
@@ -56,13 +59,14 @@ export const fetchUsers = () => {
 	};
 };
 
-export const login = (credentials: LoginVars) => {
+export const login = (email: string, password: string) => {
 	return (dispatch: any) => {
 		return client
 			.mutate<LoginData, LoginVars>({
 				mutation: LoginMutation,
 				variables: {
-					...credentials
+					email,
+					password
 				}
 			})
 			.then((response) => {
@@ -75,7 +79,33 @@ export const login = (credentials: LoginVars) => {
 			.catch((error) => {
 				const firstError = error.graphQLErrors[0];
 				dispatch(
-					setLoginError({
+					setError({
+						cause: `${firstError.path!![0]}`,
+						message: firstError.message
+					})
+				);
+			});
+	};
+};
+
+export const register = (user: UserForCreate) => {
+	return (dispatch: any) => {
+		return client
+			.mutate<RegisterData, RegisterVars>({
+				mutation: RegisterMutation,
+				variables: {
+					user
+				}
+			})
+			.then((response) => {
+				const { data } = response;
+				if (data) {
+				}
+			})
+			.catch((error) => {
+				const firstError = error.graphQLErrors[0];
+				dispatch(
+					setError({
 						cause: `${firstError.path!![0]}`,
 						message: firstError.message
 					})
@@ -93,10 +123,14 @@ export const fetchCurrentUser = () => {
 			.then((response) => {
 				const { data } = response;
 				if (data) {
-					dispatch(setCurrentUser(data.currentUser));
+					setTimeout(() => {
+						dispatch(setCurrentUser(data.currentUser));
+					}, 5000);
 				}
 			})
-			.catch(console.log);
+			.catch(() => {
+				dispatch(clearToken());
+			});
 	};
 };
 
@@ -113,6 +147,12 @@ const userReducer = (state: UserState = initialUserState, action: UserAction) =>
 			return {
 				...state,
 				token
+			};
+		case CLEAR_TOKEN:
+			localStorage.removeItem('token');
+			return {
+				...state,
+				token: undefined
 			};
 		case SET_ERROR:
 			return {
