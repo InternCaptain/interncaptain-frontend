@@ -1,6 +1,6 @@
 import { TextFieldProps } from '@material-ui/core/TextField/TextField';
 import React, { useState } from 'react';
-import { Icon, IconButton, InputAdornment, TextField } from '@material-ui/core';
+import { Icon, InputAdornment, TextField } from '@material-ui/core';
 
 const PasswordField = (props: TextFieldProps) => {
 	const [inputType, setInputType] = useState<'password' | 'text'>('password');

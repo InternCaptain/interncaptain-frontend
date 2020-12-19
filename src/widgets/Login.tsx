@@ -1,7 +1,7 @@
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { Button, Grid, Icon, Link, TextField } from '@material-ui/core';
+import { Button, Grid, Link, TextField } from '@material-ui/core';
 import ServerError from '../api/types/ServerError';
 import AppState from '../redux/AppState';
 import { login } from '../redux/user';
