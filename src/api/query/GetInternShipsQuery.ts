@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { Connection } from '../types/Connection';
+import { Connection, ConnectionParams } from '../types/Connection';
 import { Internship } from '../types/Internship';
 
 const GetInternShipsQuery = gql`
@@ -16,10 +16,14 @@ const GetInternShipsQuery = gql`
 	}
 `;
 
+export default GetInternShipsQuery;
+
 export type InternshipConnection = Connection<Internship>;
 
-export interface GetInternShipsVars {
-	recruiter?: number;
+export interface GetInternShipsData {
+	internships: InternshipConnection;
 }
 
-export default GetInternShipsQuery;
+export interface GetInternShipsVars extends ConnectionParams<Internship> {
+}
+
