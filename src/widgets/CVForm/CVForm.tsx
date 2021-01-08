@@ -33,7 +33,7 @@ const CVForm: React.FC<CVFormProperties> = (properties) => {
 		addEntry(group.name);
 	};
 
-	const handleUpdate = (group: CVGroup) => (entryId, field, newValue) => {
+	const handleUpdate = (group: CVGroup) => (entryId: number, field, newValue) => {
 		updateEntry(group.name, entryId, field, newValue);
 	};
 
