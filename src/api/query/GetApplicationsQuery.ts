@@ -1,16 +1,21 @@
-import { gql } from "@apollo/client";
-import Application from "../types/Application";
-import { Connection, ConnectionParams } from "../types/Connection";
+import { gql } from '@apollo/client';
+import Application from '../types/Application';
+import { Connection } from '../types/Connection';
 
 const GetApplicationsQuery = gql`
-    query getApplications($internship: Long!) {
-        applications(where:{internshipId: $internship}) {
-            nodes {
-                studentId
-                status
-            }
-        }
-    }
+	query getApplications($where: ApplicationFilter) {
+		applications(where: $where) {
+			nodes {
+				internshipId
+				student {
+					firstName
+					lastName
+					profilePicture
+				}
+				status
+			}
+		}
+	}
 `;
 
 export default GetApplicationsQuery;
@@ -18,8 +23,12 @@ export default GetApplicationsQuery;
 export type ApplicationConnection = Connection<Application>;
 
 export interface GetApplicationsData {
-    applications: ApplicationConnection;
+	applications: ApplicationConnection;
 }
 
-export interface GetApplicationsVars extends ConnectionParams<Application> {
+export interface GetApplicationsVars {
+	where?: {
+		internshipId?: number;
+		studentId?: number;
+	};
 }

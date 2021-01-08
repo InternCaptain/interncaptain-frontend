@@ -1,5 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const getCompanyName = (companyId, companies) => {
-    return companies.find(company => company.id === companyId);
+	return companies.find((company) => company.id === companyId);
 };

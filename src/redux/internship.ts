@@ -33,14 +33,14 @@ const setInternships = (internships: Internship[]) => ({ type: SET_INTERNSHIPS, 
 const setCompanies = (companies: Company[]) => ({ type: SET_COMPANIES, companies });
 const setApplications = (applications: Application[]) => ({ type: SET_APPLICATIONS, applications });
 
-export const fetchInternships = (recruiter?: number) => {
+export const fetchInternships = (recruiterId?: number) => {
 	return (dispatch: any) => {
 		return client
 			.query<GetInternShipsData, GetInternShipsVars>({
 				query: GetInternShipsQuery,
 				variables: {
 					where: {
-						recruiter
+						recruiterId
 					}
 				}
 			})
@@ -53,14 +53,14 @@ export const fetchInternships = (recruiter?: number) => {
 	};
 };
 
-export const fetchCompanies = (company?: number) => {
+export const fetchCompanies = (companyId?: number) => {
 	return (dispatch: any) => {
 		return client
 			.query<GetCompaniesData, GetCompaniesVars>({
 				query: GetCompaniesQuery,
 				variables: {
 					where: {
-						company
+						companyId
 					}
 				}
 			})
@@ -69,19 +69,17 @@ export const fetchCompanies = (company?: number) => {
 				if (data) {
 					dispatch(setCompanies(data.companies.nodes!!));
 				}
-			})
-	}
-}
+			});
+	};
+};
 
-export const fetchApplications = (internship?: number) => {
+export const fetchApplications = (where) => {
 	return (dispatch: any) => {
 		return client
 			.query<GetApplicationsData, GetApplicationsVars>({
 				query: GetApplicationsQuery,
 				variables: {
-					where: {
-						internship
-					}
+					where
 				}
 			})
 			.then((response) => {
@@ -89,9 +87,9 @@ export const fetchApplications = (internship?: number) => {
 				if (data) {
 					dispatch(setApplications(data.applications.nodes!!));
 				}
-			})
-	}
-}
+			});
+	};
+};
 
 const internshipReducer = (state: InternshipState = initialInternshipState, action: InternshipAction) => {
 	const { type, internships, companies, applications } = action;
@@ -100,17 +98,17 @@ const internshipReducer = (state: InternshipState = initialInternshipState, acti
 			return {
 				...state,
 				internships
-			}
+			};
 		case SET_COMPANIES:
 			return {
 				...state,
 				companies
-			}
+			};
 		case SET_APPLICATIONS:
 			return {
 				...state,
 				applications
-			}
+			};
 	}
 	return state;
 };

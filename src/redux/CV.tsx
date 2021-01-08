@@ -62,24 +62,21 @@ const initialCVState = [
 ];
 
 function createGroupEntry(fields: string[], entries: CVGroupEntry[]) {
+	const newId = 1 + Math.max(...entries.map((entry) => entry.id));
 
-	const newId = 1 + Math.max(...entries.map(entry => entry.id));
-
-	return Object.fromEntries([
-		['id', newId],
-		...fields.map(field => [field, ''])
-	]);
+	return Object.fromEntries([['id', newId], ...fields.map((field) => [field, ''])]);
 }
 
 const CVreducer = (state: CVState = initialCVState, action: CVAction) => {
 	const { type, groupName, entryId, field, newValue } = action;
 	switch (type) {
 		case ADD_ENTRY:
-			return state.map(group => {
+			return state.map((group) => {
 				if (group.name === groupName) {
 					const { name, fields, entries } = group;
 					return {
-						name, fields,
+						name,
+						fields,
 						entries: [...entries, createGroupEntry(fields, entries)]
 					};
 				} else {
@@ -87,12 +84,13 @@ const CVreducer = (state: CVState = initialCVState, action: CVAction) => {
 				}
 			});
 		case UPDATE_ENTRY:
-			return state.map(group => {
+			return state.map((group) => {
 				if (group.name === groupName) {
 					const { name, fields, entries } = group;
 					return {
-						name, fields,
-						entries: entries.map(entry => {
+						name,
+						fields,
+						entries: entries.map((entry) => {
 							if (entry.id === entryId) {
 								return {
 									...entry,
@@ -109,12 +107,13 @@ const CVreducer = (state: CVState = initialCVState, action: CVAction) => {
 			});
 		case DELETE_ENTRY:
 			console.log(groupName);
-			return state.filter(group => {
+			return state.filter((group) => {
 				if (group.name === groupName) {
 					const { name, fields, entries } = group;
 					return {
-						name, fields,
-						entries: entries.filter(entry => entry.id !== entryId)
+						name,
+						fields,
+						entries: entries.filter((entry) => entry.id !== entryId)
 					};
 				} else {
 					return group;

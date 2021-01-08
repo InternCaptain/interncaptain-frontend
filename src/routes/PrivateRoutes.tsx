@@ -5,7 +5,7 @@ import ThemePicker from '../widgets/ThemePicker';
 import Users from '../widgets/Users';
 import PrivatePage from '../widgets/PrivatePage';
 import CVForm from '../widgets/CVForm';
-import InternshipPage from "../widgets/InternshipsPage";
+import InternshipPage from '../widgets/InternshipsPage';
 
 interface PrivateRoutesProperties {}
 

@@ -123,9 +123,7 @@ export const fetchCurrentUser = () => {
 			.then((response) => {
 				const { data } = response;
 				if (data) {
-					setTimeout(() => {
-						dispatch(setCurrentUser(data.currentUser));
-					}, 1000);
+					dispatch(setCurrentUser(data.currentUser));
 				}
 			})
 			.catch(() => {

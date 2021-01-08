@@ -1,9 +1,12 @@
 import { Domain } from './Domain';
+import Company from './Company';
+import User from './User';
 
 export interface Internship {
-	companyId: number;
+	id: number;
+	company: Company;
 	description: string;
 	domain: Domain;
-	id: number;
 	positionName: string;
+	recruiter: User;
 }

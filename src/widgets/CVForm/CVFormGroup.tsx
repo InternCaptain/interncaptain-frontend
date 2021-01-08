@@ -27,11 +27,8 @@ const CVFormGroup: React.FC<CVFormGroupProperties> = (properties) => {
 	};
 
 	return (
-		<div
-			key={name}
-			style={{ maxWidth: '600px' }}>
-			<div
-				style={{ display: 'flex', width: '100%' }}>
+		<div key={name} style={{ maxWidth: '600px' }}>
+			<div style={{ display: 'flex', width: '100%' }}>
 				<div style={{ flexGrow: 1 }}>{capitalizeFirstLetter(name)}</div>
 				<IconButton onClick={addEntry} color="primary">
 					<Icon>add</Icon>
@@ -39,31 +36,33 @@ const CVFormGroup: React.FC<CVFormGroupProperties> = (properties) => {
 			</div>
 			<table style={{ width: '100%' }}>
 				<thead>
-				<tr>
-					{fields.map((field) => (
-						<th key={field}>{capitalizeFirstLetter(field)}</th>
-					))}
-				</tr>
+					<tr>
+						{fields.map((field) => (
+							<th key={field}>{capitalizeFirstLetter(field)}</th>
+						))}
+					</tr>
 				</thead>
 				<tbody>
-				{entries.map((entry) => (
-					<tr key={entry.id}>
-						<td>{entry.id}</td>
-						{fields.map((field) => (
-							<td key={`${field}-${entry[field]}`}>
-								<TextField value={entry[field]}
-										   variant={'outlined'}
-										   size={'small'}
-										   onChange={handleUpdate(entry.id, field)} />
+					{entries.map((entry) => (
+						<tr key={entry.id}>
+							<td>{entry.id}</td>
+							{fields.map((field) => (
+								<td key={`${field}-${entry[field]}`}>
+									<TextField
+										value={entry[field]}
+										variant={'outlined'}
+										size={'small'}
+										onChange={handleUpdate(entry.id, field)}
+									/>
+								</td>
+							))}
+							<td>
+								<IconButton onClick={handleDelete(entry.id)}>
+									<Icon>remove</Icon>
+								</IconButton>
 							</td>
-						))}
-						<td>
-							<IconButton onClick={handleDelete(entry.id)}>
-								<Icon>remove</Icon>
-							</IconButton>
-						</td>
-					</tr>
-				))}
+						</tr>
+					))}
 				</tbody>
 			</table>
 		</div>

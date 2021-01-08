@@ -18,7 +18,7 @@ const useStyles = makeStyles(() =>
 );
 
 interface CVFormProperties {
-	groups: CVGroup[],
+	groups: CVGroup[];
 	addEntry: (groupName: string) => void;
 	updateEntry: (groupName: string, entryId: number, field: string, newValue: string) => void;
 	deleteEntry: (groupName: string, entryId: number) => void;
@@ -43,18 +43,17 @@ const CVForm: React.FC<CVFormProperties> = (properties) => {
 
 	return (
 		<form className={classes.form}>
-			{
-				groups.map(group => (
-					<CVFormGroup
-						key={group.name}
-						name={group.name}
-						fields={group.fields}
-						entries={group.entries}
-						addEntry={handleAdd(group)}
-						updateEntry={handleUpdate(group)}
-						deleteEntry={handleDelete(group)} />
-				))
-			}
+			{groups.map((group) => (
+				<CVFormGroup
+					key={group.name}
+					name={group.name}
+					fields={group.fields}
+					entries={group.entries}
+					addEntry={handleAdd(group)}
+					updateEntry={handleUpdate(group)}
+					deleteEntry={handleDelete(group)}
+				/>
+			))}
 		</form>
 	);
 };
@@ -64,12 +63,10 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-	addEntry: (groupName: string) =>
-		dispatch(addEntry(groupName)),
+	addEntry: (groupName: string) => dispatch(addEntry(groupName)),
 	updateEntry: (groupName: string, entryId: number, field: string, newValue: string) =>
 		dispatch(updateEntry(groupName, entryId, field, newValue)),
-	deleteEntry: (groupName: string, entryId: number) =>
-		dispatch(deleteEntry(groupName, entryId))
+	deleteEntry: (groupName: string, entryId: number) => dispatch(deleteEntry(groupName, entryId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CVForm);

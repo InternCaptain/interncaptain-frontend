@@ -1,16 +1,22 @@
 import { gql } from '@apollo/client';
-import { Connection, ConnectionParams } from '../types/Connection';
+import { Connection } from '../types/Connection';
 import { Internship } from '../types/Internship';
 
 const GetInternShipsQuery = gql`
-	query getInternships($recruiter: Long) {
-		internships(where: { recruiterId: $recruiter }) {
+	query getInternships($where: InternshipFilter) {
+		internships(where: $where) {
 			nodes {
-				companyId
+				id
+				company {
+					name
+				}
 				description
 				domain
-				id
 				positionName
+				recruiter {
+					firstName
+					lastName
+				}
 			}
 		}
 	}
@@ -24,4 +30,8 @@ export interface GetInternShipsData {
 	internships: InternshipConnection;
 }
 
-export interface GetInternShipsVars extends ConnectionParams<Internship> {}
+export interface GetInternShipsVars {
+	where: {
+		recruiterId?: number;
+	};
+}

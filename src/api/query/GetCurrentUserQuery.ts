@@ -9,6 +9,7 @@ const GetCurrentUserQuery = gql`
 			lastName
 			email
 			profilePicture
+			role
 		}
 	}
 `;
