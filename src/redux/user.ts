@@ -125,7 +125,7 @@ export const fetchCurrentUser = () => {
 				if (data) {
 					setTimeout(() => {
 						dispatch(setCurrentUser(data.currentUser));
-					}, 5000);
+					}, 1000);
 				}
 			})
 			.catch(() => {

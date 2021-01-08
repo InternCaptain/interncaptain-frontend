@@ -24,6 +24,4 @@ export interface GetInternShipsData {
 	internships: InternshipConnection;
 }
 
-export interface GetInternShipsVars extends ConnectionParams<Internship> {
-}
-
+export interface GetInternShipsVars extends ConnectionParams<Internship> {}

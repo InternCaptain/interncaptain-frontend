@@ -9,14 +9,13 @@ export interface InternshipState {
 	internships: Internship[];
 }
 
-export interface InternshipAction  extends Action<string>{
+export interface InternshipAction extends Action<string> {
 	internships?: Internship[];
 }
 
 const initialInternshipState = {
 	internships: []
 };
-
 
 const setInternships = (internships: Internship[]) => ({ type: SET_INTERNSHIPS, internships });
 
@@ -47,7 +46,7 @@ const internshipReducer = (state: InternshipState = initialInternshipState, acti
 			return {
 				...state,
 				internships
-			}
+			};
 	}
 	return state;
 };

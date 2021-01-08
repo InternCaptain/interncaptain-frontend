@@ -88,18 +88,18 @@ const Login: React.FC<LoginProperties> = (properties) => {
 					fullWidth
 				/>
 				<Button onClick={handleSubmit} color="primary" variant="contained" className={classes.submit} fullWidth>
-					{'Login'}
+					Login
 				</Button>
 			</form>
 			<Grid container>
 				<Grid item xs>
 					<Link component={RouterLink} to={'/recover'} underline={'none'}>
-						{'Forgot password?'}
+						Forgot password?
 					</Link>
 				</Grid>
 				<Grid item>
 					<Link component={RouterLink} to={'/register'} underline={'none'}>
-						{'Create an account'}
+						Create an account
 					</Link>
 				</Grid>
 			</Grid>

@@ -1,4 +1,4 @@
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import { createStyles } from '@material-ui/core';
 import React from 'react';
 import clsx from 'clsx';
@@ -33,10 +33,6 @@ interface AppTitleProperties {
 
 const AppTitle = (properties: AppTitleProperties) => {
 	const classes = useStyles({ fontSize: 50, ...properties });
-
-	const theme = useTheme();
-
-	console.log(theme.palette.primary.main);
 
 	return (
 		<div className={classes.titleWrapper}>

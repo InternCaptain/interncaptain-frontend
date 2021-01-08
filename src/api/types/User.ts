@@ -1,4 +1,4 @@
-import { UserRole } from "./UserRole";
+import { UserRole } from './UserRole';
 
 export default interface User {
 	id: number;
@@ -6,7 +6,7 @@ export default interface User {
 	firstName?: string;
 	lastName?: string;
 	profilePicture?: string;
-	role: UserRole
+	role: UserRole;
 }
 
 export interface UserForCreate {

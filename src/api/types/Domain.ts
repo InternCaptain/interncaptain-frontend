@@ -6,5 +6,5 @@ export enum Domain {
 	ECONOMICS,
 	BIOLOGY,
 	HISTORY,
-	OTHERS,
+	OTHERS
 }

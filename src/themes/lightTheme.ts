@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import colors from './colors';
 
 const primary = colors.green;
-const secondary = colors.blue;
+const secondary = colors.ice;
 
 const lightTheme = createMuiTheme({
 	shape: {
