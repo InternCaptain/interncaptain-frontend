@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Button, Icon, IconButton, Toolbar, Typography } from '@material-ui/core';
 import React from 'react';
 import AppTitle from './AppTitile';
+import Search from "./Search";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -19,6 +20,7 @@ export default function AppToolbar() {
 					<Typography variant="h6">
 						<AppTitle fontSize={30} />
 					</Typography>
+					<Search/>
 				</Toolbar>
 			</AppBar>
 		</div>
