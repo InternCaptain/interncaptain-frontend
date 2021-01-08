@@ -29,7 +29,7 @@ const lightTheme = createMuiTheme({
 					backgroundColor: primary.light
 				},
 				'::-webkit-scrollbar': {
-					width: '15px'
+					width: '5px'
 				},
 				'::-webkit-scrollbar-thumb': {
 					backgroundColor: primary.light,
