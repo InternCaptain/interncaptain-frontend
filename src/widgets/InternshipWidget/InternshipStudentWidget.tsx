@@ -9,6 +9,7 @@ import { green } from '../../themes/colors';
 import { Internship } from '../../api/types/Internship';
 import { Avatar, CardHeader } from '@material-ui/core';
 import { capitalizeFirstLetter } from '../../utils/utils';
+import Application from '../../api/types/Application';
 
 const useStyles = makeStyles({
 	root: {
@@ -23,16 +24,18 @@ const useStyles = makeStyles({
 export interface InternshipStudentWidgetProperties {
 	internship: Internship;
 	onExtend: () => void;
+	onAddApplication: (internshipId: number) => void;
 }
 
 const InternshipStudentWidget: React.FC<InternshipStudentWidgetProperties> = (props) => {
 	const classes = useStyles();
 
-	const { internship, onExtend } = props;
+	const { internship, onExtend, onAddApplication } = props;
 
 	const [extended, setExtended] = useState(false);
 
 	const {
+		id,
 		company: { name: companyName },
 		description,
 		domain,
@@ -67,7 +70,7 @@ const InternshipStudentWidget: React.FC<InternshipStudentWidgetProperties> = (pr
 		<Button
 			className={classes.button}
 			onClick={() => {
-				console.log('Am aplicat');
+				onAddApplication(id);
 			}}>
 			Apply
 		</Button>

@@ -8,11 +8,13 @@ import GetApplicationsQuery, { GetApplicationsData, GetApplicationsVars } from '
 import Application from '../api/types/Application';
 import { ApplicationStatus } from '../api/types/ApplicationStatus';
 import UpdateApplicationStatusMutation, { UpdateApplicationStatusData, UpdateApplicationStatusVars } from '../api/mutation/UpdateApplicationStatusMutation';
+import AddApplicationMutation, { AddApplicationData, AddApplicationVars } from '../api/mutation/AddApplicationMutation';
 
 const SET_INTERNSHIPS = 'SET_INTERNSHIPS';
 const SET_COMPANIES = 'SET_COMPANIES';
 const SET_APPLICATIONS = 'SET_APPLICATIONS';
 const SET_APPLICATION_STATUS = 'SET_APPLICATION_STATUS';
+const ADD_APPLICATION = 'ADD_APPLICATION';
 
 export interface InternshipState {
 	internships: Internship[];
@@ -26,6 +28,7 @@ export interface InternshipAction extends Action<string> {
 	applications?: Application[];
 	applicationId: number;
 	newStatus: ApplicationStatus;
+	applicationToAdd: Application;
 }
 
 const initialInternshipState = {
@@ -38,6 +41,7 @@ const setInternships = (internships: Internship[]) => ({ type: SET_INTERNSHIPS, 
 const setCompanies = (companies: Company[]) => ({ type: SET_COMPANIES, companies });
 const setApplications = (applications: Application[]) => ({ type: SET_APPLICATIONS, applications });
 const setApplicationStatus = (applicationId: number, newStatus: ApplicationStatus) => ({ type: SET_APPLICATION_STATUS, applicationId, newStatus });
+const addApplication = (applicationToAdd: Application) => ({ type: ADD_APPLICATION, applicationToAdd });
 
 function hasValidKeys(where) {
 	return Object.values(where);
@@ -102,7 +106,6 @@ export const fetchApplications = (where) => {
 };
 
 export const updateApplicationStatus = (applicationId: number, newStatus: ApplicationStatus) => {
-	console.log(applicationId, newStatus);
 	return (dispatch: any) => {
 		return client
 			.mutate<UpdateApplicationStatusData, UpdateApplicationStatusVars>({
@@ -121,8 +124,28 @@ export const updateApplicationStatus = (applicationId: number, newStatus: Applic
 	};
 };
 
+export const fetchAddApplication = (internshipId: number, studentId: number) => {
+	return (dispatch: any) => {
+		return client
+			.mutate<AddApplicationData, AddApplicationVars>({
+				mutation: AddApplicationMutation,
+				variables: {
+					internshipId,
+					studentId
+				}
+			})
+			.then((response) => {
+				dispatch(addApplication(response.data.addApplication));
+			})
+			.catch((error) => {
+
+			});
+	}
+}
+
 const internshipReducer = (state: InternshipState = initialInternshipState, action: InternshipAction) => {
-	const { type, internships, companies, applications, applicationId, newStatus } = action;
+	const { type, internships, companies, applications, applicationId, newStatus, applicationToAdd } = action;
+
 	switch (type) {
 		case SET_INTERNSHIPS:
 			return {
@@ -163,6 +186,11 @@ const internshipReducer = (state: InternshipState = initialInternshipState, acti
 							return application;
 					})
 				]
+			}
+		case ADD_APPLICATION:
+			return {
+				...state,
+				applications: state.applications.concat(applicationToAdd)
 			}
 	}
 	return state;

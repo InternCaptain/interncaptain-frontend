@@ -12,17 +12,20 @@ export interface InternshipWidgetProperties {
 	role: UserRole;
 	onExtend: () => void;
 	onSetApplicationStatus: (applicationId: number, newStatus: ApplicationStatus) => void;
+	onAddApplication: (internshipId: number) => void;
 }
 
 const InternshipWidget: React.FC<InternshipWidgetProperties> = (props) => {
 
-	const { internship, role, applications, onExtend, onSetApplicationStatus } = props;
+	const { internship, role, applications, onExtend, onSetApplicationStatus, onAddApplication } = props;
 
 	if (role === UserRole.STUDENT) {
 		return (
 			<InternshipStudentWidget
 				internship={internship}
-				onExtend={onExtend} />
+				onExtend={onExtend}
+				onAddApplication={onAddApplication} 
+			/>
 		);
 	} else {
 		return <InternshipRecruiterWidget
