@@ -32,7 +32,7 @@ export interface GetInternShipsData {
 }
 
 export interface GetInternShipsVars {
-	where: {
+	where?: {
 		recruiterId?: number;
 	};
 }

@@ -83,7 +83,7 @@ const InternshipStudentWidget: React.FC<InternshipStudentWidgetProperties> = (pr
 					subheader={`${companyName} in ${domainName}`}
 				/>
 				<CardContent style={{ flexGrow: 1 }}>
-					{description.slice(0, 500)}
+					{description}
 				</CardContent>
 				<div style={{ flexGrow: 1 }} />
 				<CardActions> 
