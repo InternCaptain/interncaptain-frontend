@@ -10,6 +10,7 @@ const GetApplicationsQuery = gql`
 					id
 				}
 				student {
+					id
 					firstName
 					lastName
 					profilePicture

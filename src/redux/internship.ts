@@ -105,10 +105,20 @@ const internshipReducer = (state: InternshipState = initialInternshipState, acti
 				companies
 			};
 		case SET_APPLICATIONS:
-			return {
-				...state,
-				applications: [...state.applications, ...applications]
-			};
+			if (applications.length > 0) {
+				return {
+					...state,
+					applications: [
+						...state.applications.filter(application =>
+							applications!!.find(a => a.internship.id !== application.internship.id)
+							&& applications!!.find(a => a.student.id !== application.student.id)
+						),
+						...applications
+					]
+				};
+			} else {
+				return state;
+			}
 	}
 	return state;
 };
