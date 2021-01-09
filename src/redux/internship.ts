@@ -6,10 +6,13 @@ import GetCompaniesQuery, { GetCompaniesData, GetCompaniesVars } from '../api/qu
 import Company from '../api/types/Company';
 import GetApplicationsQuery, { GetApplicationsData, GetApplicationsVars } from '../api/query/GetApplicationsQuery';
 import Application from '../api/types/Application';
+import { ApplicationStatus } from '../api/types/ApplicationStatus';
+import UpdateApplicationStatusMutation, { UpdateApplicationStatusData, UpdateApplicationStatusVars } from '../api/mutation/UpdateApplicationStatusMutation';
 
 const SET_INTERNSHIPS = 'SET_INTERNSHIPS';
 const SET_COMPANIES = 'SET_COMPANIES';
 const SET_APPLICATIONS = 'SET_APPLICATIONS';
+const SET_APPLICATION_STATUS = 'SET_APPLICATION_STATUS';
 
 export interface InternshipState {
 	internships: Internship[];
@@ -21,6 +24,8 @@ export interface InternshipAction extends Action<string> {
 	internships?: Internship[];
 	companies?: Company[];
 	applications?: Application[];
+	applicationId: number;
+	newStatus: ApplicationStatus;
 }
 
 const initialInternshipState = {
@@ -32,6 +37,7 @@ const initialInternshipState = {
 const setInternships = (internships: Internship[]) => ({ type: SET_INTERNSHIPS, internships });
 const setCompanies = (companies: Company[]) => ({ type: SET_COMPANIES, companies });
 const setApplications = (applications: Application[]) => ({ type: SET_APPLICATIONS, applications });
+const setApplicationStatus = (applicationId: number, newStatus: ApplicationStatus) => ({ type: SET_APPLICATION_STATUS, applicationId, newStatus });
 
 export const fetchInternships = (recruiterId?: number) => {
 	return (dispatch: any) => {
@@ -91,8 +97,28 @@ export const fetchApplications = (where) => {
 	};
 };
 
+export const updateApplicationStatus = (applicationId: number, newStatus: ApplicationStatus) => {
+	console.log(applicationId, newStatus);
+	return (dispatch: any) => {
+		return client
+			.mutate<UpdateApplicationStatusData, UpdateApplicationStatusVars>({
+				mutation: UpdateApplicationStatusMutation,
+				variables: {
+					applicationId,
+					newStatus
+				}
+			})
+			.then((response) => {
+				dispatch(setApplicationStatus(applicationId, response.data.updateApplicationStatus.status));
+			})
+			.catch((error) => {
+				
+			});
+	};
+};
+
 const internshipReducer = (state: InternshipState = initialInternshipState, action: InternshipAction) => {
-	const { type, internships, companies, applications } = action;
+	const { type, internships, companies, applications, applicationId, newStatus } = action;
 	switch (type) {
 		case SET_INTERNSHIPS:
 			return {
@@ -118,6 +144,21 @@ const internshipReducer = (state: InternshipState = initialInternshipState, acti
 				};
 			} else {
 				return state;
+			};
+		case SET_APPLICATION_STATUS:
+			return {
+				...state,
+				applications: [
+					...state.applications.map(application => {
+						if (application.id === applicationId)
+							return {
+								...application,
+								status: newStatus
+							}
+						else
+							return application;
+					})
+				]
 			}
 	}
 	return state;

@@ -10,10 +10,12 @@ import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import { Box } from '@material-ui/core';
+import { Box, Icon } from '@material-ui/core';
 import { green } from '../../themes/colors';
 import { Internship } from '../../api/types/Internship';
 import Application from '../../api/types/Application';
+import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
+import { ApplicationStatus } from '../../api/types/ApplicationStatus';
 
 const useStyles = makeStyles({
 	root: {
@@ -49,12 +51,13 @@ export interface InternshipRecruiterWidgetProperties {
 	internship: Internship;
 	applications: Application[];
 	onExtend: () => void;
+	onSetApplicationStatus: (applicationId: number, newStatus: ApplicationStatus) => void;
 }
 
 const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> = (props) => {
 		const classes = useStyles();
 
-		const { internship, applications, onExtend } = props;
+		const { internship, applications, onExtend, onSetApplicationStatus } = props;
 
 		const [extended, setExtended] = useState(false);
 		const [width, setWidth] = useState('300px');
@@ -81,18 +84,43 @@ const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> =
 			onExtend();
 		};
 
+		const toggleApplicationStatus = (id: number) => (event, newStatus) => {
+			onSetApplicationStatus(id, newStatus);
+		}
+
 		const Details = () => (
 			<List dense className={classes.list}>
 				{applications &&
-				applications.map(({ student }) => {
+				applications.map(({ student, status, id }) => {
 					const { firstName, lastName, profilePicture } = student;
-					const name = firstName + ' ' + lastName;
+					const name = `${firstName} ${lastName}`;
+					
 					return (
 						<ListItem key={name} button>
 							<ListItemAvatar>
 								<Avatar src={profilePicture} />
 							</ListItemAvatar>
-							<ListItemText primary={name} />
+
+							<ListItemText 
+								primary={name} 
+								secondary={
+									<ToggleButtonGroup exclusive value={status} onChange={toggleApplicationStatus(id)}>
+										<ToggleButton value="PENDING">
+											<Icon>pending</Icon>
+										</ToggleButton>
+										<ToggleButton value="UNDERCONSIDERATION">
+											<Icon>preview</Icon>
+										</ToggleButton>
+										<ToggleButton value="ACCEPTED">
+											<Icon>done</Icon>
+										</ToggleButton>
+										<ToggleButton value="REJECTED">
+											<Icon>close</Icon>
+										</ToggleButton>
+									</ToggleButtonGroup>
+								}
+							/>
+							
 						</ListItem>
 					);
 				})}
