@@ -3,6 +3,7 @@ import { AppBar, Button, Icon, IconButton, Toolbar, Typography } from '@material
 import React from 'react';
 import AppTitle from './AppTitile';
 import Search from './Search';
+import SearchCompany from './SearchCompany';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -20,7 +21,7 @@ export default function AppToolbar() {
 					<Typography variant="h6">
 						<AppTitle fontSize={30} />
 					</Typography>
-					<Search />
+					<SearchCompany />
 				</Toolbar>
 			</AppBar>
 		</div>
