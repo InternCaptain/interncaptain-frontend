@@ -43,6 +43,8 @@ const InternshipPage: React.FC<InternshipPageProperties> = (props) => {
 		onRequestInternships(role === UserRole.HR ? id : null);
 	}, []);
 
+	const filterApplications = (internshipId: number) => applications.filter(a => a.internship.id === internshipId);
+
 	return (
 		<Box>
 			{splitBy4(internships).map((list, index) => (
@@ -52,7 +54,7 @@ const InternshipPage: React.FC<InternshipPageProperties> = (props) => {
 							onExtend={() => {
 								onRequestApplications(internship.id);
 							}}
-							applications={applications}
+							applications={filterApplications(internship.id)}
 							internship={internship}
 							role={role}
 						/>

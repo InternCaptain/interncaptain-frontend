@@ -6,7 +6,9 @@ const GetApplicationsQuery = gql`
 	query getApplications($where: ApplicationFilter) {
 		applications(where: $where) {
 			nodes {
-				internshipId
+				internship {
+					id
+				}
 				student {
 					firstName
 					lastName

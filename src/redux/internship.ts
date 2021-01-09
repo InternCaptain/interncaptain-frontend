@@ -107,7 +107,7 @@ const internshipReducer = (state: InternshipState = initialInternshipState, acti
 		case SET_APPLICATIONS:
 			return {
 				...state,
-				applications
+				applications: [...state.applications, ...applications]
 			};
 	}
 	return state;
