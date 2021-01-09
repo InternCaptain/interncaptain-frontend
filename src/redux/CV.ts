@@ -106,7 +106,6 @@ const CVreducer = (state: CVState = initialCVState, action: CVAction) => {
 				}
 			});
 		case DELETE_ENTRY:
-			console.log(groupName);
 			return state.filter((group) => {
 				if (group.name === groupName) {
 					const { name, fields, entries } = group;
