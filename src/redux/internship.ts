@@ -33,13 +33,17 @@ const setInternships = (internships: Internship[]) => ({ type: SET_INTERNSHIPS, 
 const setCompanies = (companies: Company[]) => ({ type: SET_COMPANIES, companies });
 const setApplications = (applications: Application[]) => ({ type: SET_APPLICATIONS, applications });
 
+function hasValidKeys(where) {
+	return Object.values(where);
+}
+
 export const fetchInternships = (recruiterId?: number) => {
 	return (dispatch: any) => {
 		return client
 			.query<GetInternShipsData, GetInternShipsVars>({
 				query: GetInternShipsQuery,
 				variables: {
-					where: {
+					[recruiterId !== undefined && 'where']: {
 						recruiterId
 					}
 				}

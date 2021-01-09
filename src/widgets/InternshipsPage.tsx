@@ -13,7 +13,7 @@ interface InternshipPageProperties {
 	currentUser: User;
 	internships: Internship[];
 	applications: Application[];
-	onRequestInternships: (recruiterId: number) => void;
+	onRequestInternships: (recruiterId?: number) => void;
 	onRequestApplications: (internshipId: number) => void;
 }
 
@@ -40,7 +40,7 @@ const InternshipPage: React.FC<InternshipPageProperties> = (props) => {
 	} = props;
 
 	useEffect(() => {
-		onRequestInternships(role === UserRole.HR ? id : null);
+		onRequestInternships(role === UserRole.HR ? id : undefined);
 	}, []);
 
 	const filterApplications = (internshipId: number) => applications.filter(a => a.internship.id === internshipId);
@@ -57,7 +57,7 @@ const InternshipPage: React.FC<InternshipPageProperties> = (props) => {
 							}}
 							applications={filterApplications(internship.id)}
 							internship={internship}
-							role={UserRole.STUDENT}
+							role={role}
 						/>
 					))}
 				</Box>
@@ -73,7 +73,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-	onRequestInternships: (recruiterId) => dispatch(fetchInternships(recruiterId)),
+	onRequestInternships: (recruiterId?: number) => dispatch(fetchInternships(recruiterId)),
 	onRequestApplications: (internshipId: number) => dispatch(fetchApplications({ internshipId }))
 });
 
