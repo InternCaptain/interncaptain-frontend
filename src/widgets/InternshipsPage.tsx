@@ -11,10 +11,10 @@ import Application from '../api/types/Application';
 
 interface InternshipPageProperties {
 	currentUser: User;
-	onRequestInternships: (recruiterId: number) => void;
-	onRequestApplications: (internshipId: number) => void;
 	internships: Internship[];
 	applications: Application[];
+	onRequestInternships: (recruiterId: number) => void;
+	onRequestApplications: (internshipId: number) => void;
 }
 
 const split = (count: number) => (items: any[]) => {
@@ -51,6 +51,7 @@ const InternshipPage: React.FC<InternshipPageProperties> = (props) => {
 				<Box key={`internships-row-${index}`} style={{ display: 'flex', justifyContent: 'center' }}>
 					{list.map((internship) => (
 						<InternshipWidget
+							key={`internship-${internship.id}`}
 							onExtend={() => {
 								onRequestApplications(internship.id);
 							}}
