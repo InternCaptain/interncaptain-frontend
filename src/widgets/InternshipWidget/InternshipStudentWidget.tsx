@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { green } from '../../themes/colors';
 import { Internship } from '../../api/types/Internship';
-import { CardHeader } from '@material-ui/core';
+import { Avatar, CardHeader } from '@material-ui/core';
 import { capitalizeFirstLetter } from '../../utils/utils';
 
 const useStyles = makeStyles({
@@ -37,7 +37,7 @@ const InternshipStudentWidget: React.FC<InternshipStudentWidgetProperties> = (pr
 		description,
 		domain,
 		positionName,
-		recruiter: { firstName, lastName }
+		recruiter: { firstName, lastName, profilePicture }
 	} = internship;
 
 	const toggleExtendButton = () => {
@@ -48,7 +48,9 @@ const InternshipStudentWidget: React.FC<InternshipStudentWidgetProperties> = (pr
 	const Details = () => (
 		<>
 			<Typography variant={'body2'}>
-				Recruiter: {`${firstName} ${lastName}`}
+				Recruiter: 
+				<Avatar src={profilePicture}/>
+				{`${firstName} ${lastName}`}
 			</Typography>
 			<Typography>
 			</Typography>
@@ -57,7 +59,7 @@ const InternshipStudentWidget: React.FC<InternshipStudentWidgetProperties> = (pr
 
 	const Actions = () => (
 		<Button onClick={toggleExtendButton} className={classes.button}>
-			Learn More
+			More
 		</Button>
 	);
 
@@ -84,8 +86,11 @@ const InternshipStudentWidget: React.FC<InternshipStudentWidgetProperties> = (pr
 					{description.slice(0, 500)}
 				</CardContent>
 				<div style={{ flexGrow: 1 }} />
-				<CardActions>
-					<Actions />
+				<CardActions> 
+					{
+						extended ? <Button onClick={toggleExtendButton} className={classes.button}> Less </Button> 
+						: <Actions/>
+					}
 				</CardActions>
 			</div>
 			{

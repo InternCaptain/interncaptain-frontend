@@ -4,43 +4,28 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import { Box, Icon } from '@material-ui/core';
+import { CardHeader, Icon } from '@material-ui/core';
 import { green } from '../../themes/colors';
 import { Internship } from '../../api/types/Internship';
 import Application from '../../api/types/Application';
 import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
 import { ApplicationStatus } from '../../api/types/ApplicationStatus';
+import { capitalizeFirstLetter } from '../../utils/utils';
 
 const useStyles = makeStyles({
 	root: {
 		margin: '10px',
 		height: '250px'
 	},
-	bullet: {
-		display: 'inline-block',
-		margin: '0 2px',
-		transform: 'scale(0.8)'
-	},
-	title: {
-		fontSize: 14
-	},
-	pos: {
-		marginBottom: 12,
-		fontSize: 12
-	},
 	list: {
-		maxHeight: 100,
+		maxHeight: 150,
 		overflow: 'auto',
 		paddingRight: 0
-	},
-	cardContent: {
-		display: 'flex'
 	},
 	button: {
 		color: green.main
@@ -68,8 +53,6 @@ const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> =
 			domain,
 			positionName,
 		} = internship;
-
-		const bull = <span className={classes.bullet}>•</span>;
 
 		useEffect(() => {
 			extended ? setWidth('600px') : setWidth('300px');
@@ -127,48 +110,44 @@ const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> =
 			</List>
 		);
 
-		const Content = () =>
-			(
-				<Box className={classes.cardContent}>
-					<Box style={{ maxWidth: '250px' }}>
-						<Typography variant="h6" component="h6">
-							{positionName}
-						</Typography>
-						<Typography variant="body2" component="p" style={{ paddingTop: '30px' }}>
-							{description}
-						</Typography>
-					</Box>
-					<Box>{extended && Details}</Box>
-				</Box>
-			);
-
 		const Actions = () => (
-			<Button size="small" onClick={viewStudentsApplied} className={classes.button}>
-				View students who applied
+			<Button onClick={viewStudentsApplied} className={classes.button}>
+				More
 			</Button>
 		);
 
 		const ExtendedActions = () => (
-			<Button size="small" onClick={togglePressedButton} className={classes.button}>
-				Hide students who applied
+			<Button onClick={togglePressedButton} className={classes.button}>
+				Less
 			</Button>
 		);
 
+		const domainName = domain.split('_').map(a => a.toLowerCase()).map(capitalizeFirstLetter).join(' ');
+
 		return (
-			<Card className={classes.root} style={{ width }}>
-				<CardContent>
-					<Typography className={classes.title} color="textSecondary" gutterBottom>
-						{companyName}
-						{bull}
-						{domain}
-					</Typography>
-					<Content />
-				</CardContent>
-				<CardActions style={{ paddingTop: 0 }}>
-					{
-						extended ? <ExtendedActions /> : <Actions />
-					}
-				</CardActions>
+			<Card className={classes.root} style={{ display: 'flex' }}>
+				<div style={{ width: '300px', display: 'flex', flexDirection: 'column' }}>
+					<CardHeader
+						title={positionName}
+						subheader={`${companyName} in ${domainName}`}
+					/>
+					<CardContent style={{ flexGrow: 1 }}>
+						{description.slice(0, 500)}
+					</CardContent>
+					<div style={{ flexGrow: 1 }} />
+					<CardActions>
+						{
+							extended ? <ExtendedActions /> : <Actions />
+						}
+					</CardActions>
+				</div>
+				{
+					extended && <div>
+						<CardContent style={{ flexGrow: 1 }}>
+							<Details />
+						</CardContent>
+					</div>
+				}
 			</Card>
 		);
 	}
