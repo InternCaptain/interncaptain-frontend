@@ -16,18 +16,20 @@ const InternshipWidget: React.FC<InternshipWidgetProperties> = (props) => {
 
 	const { internship, role, applications, onExtend } = props;
 
-	if(role === UserRole.STUDENT) {
+	if (role === UserRole.STUDENT) {
 		return (
 			<InternshipStudentWidget
 				internship={internship}
-				onExtend={onExtend}/>
-		)
+				onExtend={onExtend} />
+		);
 	} else {
-		return <InternshipRecruiterWidget
-			internship={internship}
-			applications={applications}
-			onExtend={onExtend}
+		return (
+			<InternshipRecruiterWidget
+				internship={internship}
+				applications={applications}
+				onExtend={onExtend}
 			/>
+		);
 	}
 };
 

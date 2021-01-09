@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon, IconButton, TextField } from '@material-ui/core';
 import { CVGroupEntry } from './Types';
+import { capitalizeFirstLetter } from '../../utils/utils';
 
 export interface CVFormGroupProperties {
 	name: string;
@@ -9,10 +10,6 @@ export interface CVFormGroupProperties {
 	addEntry: () => void;
 	updateEntry: (entryId: number, field: string, newValue: string) => void;
 	deleteEntry: (entryId: number) => void;
-}
-
-function capitalizeFirstLetter(value: string) {
-	return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
 const CVFormGroup: React.FC<CVFormGroupProperties> = (properties) => {

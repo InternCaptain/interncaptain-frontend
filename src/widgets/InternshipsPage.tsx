@@ -57,7 +57,7 @@ const InternshipPage: React.FC<InternshipPageProperties> = (props) => {
 							}}
 							applications={filterApplications(internship.id)}
 							internship={internship}
-							role={role}
+							role={UserRole.STUDENT}
 						/>
 					))}
 				</Box>
