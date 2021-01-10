@@ -3,9 +3,10 @@ import Company from '../types/Company';
 import { Connection } from '../types/Connection';
 
 const GetCompaniesQuery = gql`
-	query getCompanies($where: CompanyFilter) {
-		companies(where: $where) {
+	query getCompanies {
+		companies {
 			nodes {
+				id
 				name
 			}
 		}
@@ -21,7 +22,4 @@ export interface GetCompaniesData {
 }
 
 export interface GetCompaniesVars {
-	where: {
-		companyId: number;
-	};
 }

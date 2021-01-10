@@ -67,15 +67,12 @@ export const fetchInternships = (recruiterId?: number) => {
 	};
 };
 
-export const fetchCompanies = (companyId?: number) => {
+export const fetchCompanies = () => {
 	return (dispatch: any) => {
 		return client
 			.query<GetCompaniesData, GetCompaniesVars>({
 				query: GetCompaniesQuery,
 				variables: {
-					where: {
-						companyId
-					}
 				}
 			})
 			.then((response) => {

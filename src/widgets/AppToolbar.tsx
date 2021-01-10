@@ -3,7 +3,10 @@ import { AppBar, Button, Icon, IconButton, Toolbar, Typography } from '@material
 import React from 'react';
 import AppTitle from './AppTitile';
 import Search from './Search';
-import SearchCompany from './SearchCompany';
+import SearchCompany from './Search/SearchCompany';
+import Company from '../api/types/Company';
+import SearchPosition from './Search/SearchPosition';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -11,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function AppToolbar() {
+const AppToolbar = () => {
 	const classes = useStyles();
 
 	return (
@@ -21,9 +24,10 @@ export default function AppToolbar() {
 					<Typography variant="h6">
 						<AppTitle fontSize={30} />
 					</Typography>
-					<SearchCompany />
 				</Toolbar>
 			</AppBar>
 		</div>
 	);
 }
+
+export default AppToolbar;
