@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import InternshipWidget from './InternshipWidget';
 import { UserRole } from '../api/types/UserRole';
 import AppState from '../redux/AppState';
-import { fetchApplications, fetchInternships } from '../redux/internship';
+import { fetchAddApplication, fetchApplications, fetchInternships, updateApplicationStatus } from '../redux/internship';
 import { connect } from 'react-redux';
 import { Box } from '@material-ui/core';
 import User from '../api/types/User';
 import { Internship } from '../api/types/Internship';
 import Application from '../api/types/Application';
+import { ApplicationStatus } from '../api/types/ApplicationStatus';
 
 interface InternshipPageProperties {
 	currentUser: User;
@@ -15,6 +16,8 @@ interface InternshipPageProperties {
 	applications: Application[];
 	onRequestInternships: (recruiterId?: number) => void;
 	onRequestApplications: (internshipId: number) => void;
+	onSetApplicationStatus: (applicationId: number, newStatus: ApplicationStatus) => void;
+	onAddApplication: (internshipId: number, studentId: number) => void;
 }
 
 const split = (count: number) => (items: any[]) => {
@@ -35,6 +38,8 @@ const InternshipPage: React.FC<InternshipPageProperties> = (props) => {
 		internships,
 		onRequestInternships,
 		onRequestApplications,
+		onSetApplicationStatus,
+		onAddApplication,
 		currentUser: { role, id },
 		applications
 	} = props;
@@ -55,9 +60,15 @@ const InternshipPage: React.FC<InternshipPageProperties> = (props) => {
 							onExtend={() => {
 								onRequestApplications(internship.id);
 							}}
+							onSetApplicationStatus={(applicationId, newStatus) => {
+								onSetApplicationStatus(applicationId, newStatus);
+							}}
+							onAddApplication={(internshipId) => {
+								onAddApplication(internshipId, id)
+							}}
 							applications={filterApplications(internship.id)}
 							internship={internship}
-							role={role}
+							role={UserRole.STUDENT}
 						/>
 					))}
 				</Box>
@@ -73,8 +84,10 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-	onRequestInternships: (recruiterId?: number) => dispatch(fetchInternships(recruiterId)),
-	onRequestApplications: (internshipId: number) => dispatch(fetchApplications({ internshipId }))
+	onRequestInternships: (recruiterId) => dispatch(fetchInternships(recruiterId)),
+	onRequestApplications: (internshipId: number) => dispatch(fetchApplications({ internshipId })),
+	onSetApplicationStatus: (applicationId: number, newStatus: ApplicationStatus) => dispatch(updateApplicationStatus(applicationId, newStatus)),
+	onAddApplication: (internshipId: number, studentId: number) => dispatch(fetchAddApplication(internshipId, studentId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InternshipPage);

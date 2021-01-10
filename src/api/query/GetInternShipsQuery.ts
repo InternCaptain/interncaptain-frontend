@@ -16,6 +16,7 @@ const GetInternShipsQuery = gql`
 				recruiter {
 					firstName
 					lastName
+					profilePicture
 				}
 			}
 		}
