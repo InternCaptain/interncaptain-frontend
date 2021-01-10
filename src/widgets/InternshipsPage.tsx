@@ -10,16 +10,20 @@ import { Internship } from '../api/types/Internship';
 import Application from '../api/types/Application';
 import { ApplicationStatus } from '../api/types/ApplicationStatus';
 import InternshipList from './InternshipList';
+import SearchCompany from './Search/SearchCompany';
+import SearchPosition from './Search/SearchPosition';
 
 const InternshipPage = (props) => {
 
 	return (
 		<>
+		<Box style={{display:"flex"}}>
+			<SearchCompany/>
+			<SearchPosition/>
+		</Box>
 		<InternshipList/>
 		</>
 	);
 };
-
-
 
 export default InternshipPage;
