@@ -34,10 +34,7 @@ export const fetchProfile = (userId: number) => {
 };
 
 const initialProfileState: ProfileState = {
-	profile: {
-		description: '',
-		sections: []
-	}
+	profile: undefined
 };
 
 const profileReducer = (state: ProfileState = initialProfileState, action: ProfileAction) => {

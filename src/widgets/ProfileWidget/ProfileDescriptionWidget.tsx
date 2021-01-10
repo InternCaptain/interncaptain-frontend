@@ -16,7 +16,7 @@ const useStyles = makeStyles(() =>
 );
 
 export interface ProfileDescriptionWidgetProperties {
-	profile: Profile;
+	profile?: Profile;
 	currentUser: User;
 }
 
@@ -24,29 +24,18 @@ const ProfileDescriptionWidget: React.FC<ProfileDescriptionWidgetProperties> = (
 	const classes = useStyles();
 
 	const {
-		profile: {
-			description
-		},
-		currentUser: {
-			firstName,
-			lastName,
-			email,
-			profilePicture
-		}
+		profile,
+		currentUser: { firstName, lastName, email, profilePicture }
 	} = properties;
 
+	const description = profile === undefined ? 'Pending ...' : profile.description;
 	return (
 		<Card key={'description'} className={classes.card}>
 			<div>
-				<CardHeader
-					title={capitalizeFirstLetter(`${firstName} ${lastName}`)}
-					subheader={email}
-				/>
-				<CardContent>
-					{description}
-				</CardContent>
+				<CardHeader title={capitalizeFirstLetter(`${firstName} ${lastName}`)} subheader={email} />
+				<CardContent>{description}</CardContent>
 			</div>
-			<CardMedia image={profilePicture} title={'profilePicture'}/>
+			<CardMedia image={profilePicture} title={'profilePicture'} />
 		</Card>
 	);
 };

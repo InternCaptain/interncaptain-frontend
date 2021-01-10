@@ -133,9 +133,7 @@ export const updateApplicationStatus = (applicationId: number, newStatus: Applic
 			.then((response) => {
 				dispatch(setApplicationStatus(applicationId, response.data.updateApplicationStatus.status));
 			})
-			.catch((error) => {
-
-			});
+			.catch((error) => {});
 	};
 };
 
@@ -155,8 +153,8 @@ export const fetchAddApplication = (internshipId: number, studentId: number) => 
 			.catch((error) => {
 
 			});
-	};
-};
+	}
+}
 
 const internshipReducer = (state: InternshipState = initialInternshipState, action: InternshipAction) => {
 	const { type, internships, companies, applications, applicationId, newStatus, applicationToAdd, key, value } = action;
@@ -177,9 +175,10 @@ const internshipReducer = (state: InternshipState = initialInternshipState, acti
 				return {
 					...state,
 					applications: [
-						...state.applications.filter(application =>
-							applications!!.find(a => a.internship.id !== application.internship.id)
-							&& applications!!.find(a => a.student.id !== application.student.id)
+						...state.applications.filter(
+							(application) =>
+								applications!!.find((a) => a.internship.id !== application.internship.id) &&
+								applications!!.find((a) => a.student.id !== application.student.id)
 						),
 						...applications
 					]
@@ -187,12 +186,11 @@ const internshipReducer = (state: InternshipState = initialInternshipState, acti
 			} else {
 				return state;
 			}
-			;
 		case SET_APPLICATION_STATUS:
 			return {
 				...state,
 				applications: [
-					...state.applications.map(application => {
+					...state.applications.map((application) => {
 						if (application.id === applicationId)
 							return {
 								...application,

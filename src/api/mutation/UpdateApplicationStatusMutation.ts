@@ -3,15 +3,15 @@ import Application from '../types/Application';
 import { ApplicationStatus } from '../types/ApplicationStatus';
 
 const UpdateApplicationStatusMutation = gql`
-    mutation($applicationId: Long!, $newStatus: ApplicationStatus!) {
-        updateApplicationStatus(applicationId: $applicationId, newStatus: $newStatus) {
-            status
-        }
-    }
+	mutation($applicationId: Long!, $newStatus: ApplicationStatus!) {
+		updateApplicationStatus(applicationId: $applicationId, newStatus: $newStatus) {
+			status
+		}
+	}
 `;
 
 export interface UpdateApplicationStatusData {
-    updateApplicationStatus: Application;
+	updateApplicationStatus: Application;
 }
 
 export interface UpdateApplicationStatusVars {

@@ -14,14 +14,13 @@ import SearchCompany from './Search/SearchCompany';
 import SearchPosition from './Search/SearchPosition';
 
 const InternshipPage = (props) => {
-
 	return (
 		<>
-		<Box style={{display:"flex"}}>
-			<SearchCompany/>
-			<SearchPosition/>
-		</Box>
-		<InternshipList/>
+			<Box style={{ display: 'flex' }}>
+				<SearchCompany />
+				<SearchPosition />
+			</Box>
+			<InternshipList />
 		</>
 	);
 };

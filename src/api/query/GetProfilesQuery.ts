@@ -9,23 +9,22 @@ const GetProfilesQuery = gql`
 				name
 				position
 				fields {
-				name
-				kind
-     		}
-     		entries {
-				position
-				data {
 					name
-          			value
-        		}
-      		}
-    	}
-  	}
-}
+					kind
+				}
+				entries {
+					position
+					data {
+						name
+						value
+					}
+				}
+			}
+		}
+	}
 `;
 
 export default GetProfilesQuery;
-
 
 export interface GetProfilesData {
 	profiles: Profile[];

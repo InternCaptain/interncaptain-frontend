@@ -14,10 +14,10 @@ const PrivateRoutes: React.FC<PrivateRoutesProperties> = (properties) => {
 		<PrivatePage>
 			<Switch>
 				<Route path="/Internships" exact component={InternshipPage} />
-				<Route path="/ProfileWidget" exact component={ProfileWidget} />
+				<Route path="/Profile" exact component={ProfileWidget} />
 				<Route path="/Users" exact component={Users} />
 				<Route path="/ThemePicker" exact component={ThemePicker} />
-				<Redirect path="/**" to={'/ProfileWidget'} />
+				<Redirect path="/**" to={'/Internships'} />
 			</Switch>
 		</PrivatePage>
 	);

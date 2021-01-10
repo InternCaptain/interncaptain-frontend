@@ -37,7 +37,7 @@ export const setUsers = (users: User[]) => ({ type: SET_USERS, users });
 export const setToken = (token: string) => ({ type: SET_TOKEN, token });
 export const clearToken = () => ({ type: CLEAR_TOKEN });
 export const setError = (error: ServerError) => ({ type: SET_ERROR, error });
-export const setCurrentUser = (user: User) => ({ type: SET_CURRENT_USER, user });
+export const setCurrentUser = (user?: User) => ({ type: SET_CURRENT_USER, user });
 
 export const fetchUsers = () => {
 	return (dispatch: any) => {

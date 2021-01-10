@@ -7,6 +7,7 @@ const LoginMutation = gql`
 			token
 			currentUser {
 				id
+				role
 				firstName
 				lastName
 				email

@@ -40,52 +40,52 @@ export interface InternshipRecruiterWidgetProperties {
 }
 
 const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> = (props) => {
-		const classes = useStyles();
+	const classes = useStyles();
 
-		const { internship, applications, onExtend, onSetApplicationStatus } = props;
+	const { internship, applications, onExtend, onSetApplicationStatus } = props;
 
-		const [extended, setExtended] = useState(false);
-		const [width, setWidth] = useState('300px');
+	const [extended, setExtended] = useState(false);
+	const [width, setWidth] = useState('300px');
 
-		const {
-			company: { name: companyName },
-			description,
-			domain,
-			positionName,
-		} = internship;
+	const {
+		company: { name: companyName },
+		description,
+		domain,
+		positionName
+	} = internship;
 
-		useEffect(() => {
-			extended ? setWidth('600px') : setWidth('300px');
-		}, [extended]);
+	useEffect(() => {
+		extended ? setWidth('600px') : setWidth('300px');
+	}, [extended]);
 
-		const togglePressedButton = () => {
-			setExtended(!extended);
-		};
+	const togglePressedButton = () => {
+		setExtended(!extended);
+	};
 
-		const viewStudentsApplied = () => {
-			togglePressedButton();
-			onExtend();
-		};
+	const viewStudentsApplied = () => {
+		togglePressedButton();
+		onExtend();
+	};
 
-		const toggleApplicationStatus = (id: number) => (event, newStatus) => {
-			onSetApplicationStatus(id, newStatus);
-		}
+	const toggleApplicationStatus = (id: number) => (event, newStatus) => {
+		onSetApplicationStatus(id, newStatus);
+	};
 
-		const Details = () => (
-			<List dense className={classes.list}>
-				{applications &&
+	const Details = () => (
+		<List dense className={classes.list}>
+			{applications &&
 				applications.map(({ student, status, id }) => {
 					const { firstName, lastName, profilePicture } = student;
 					const name = `${firstName} ${lastName}`;
-					
+
 					return (
 						<ListItem key={name} button>
 							<ListItemAvatar>
 								<Avatar src={profilePicture} />
 							</ListItemAvatar>
 
-							<ListItemText 
-								primary={name} 
+							<ListItemText
+								primary={name}
 								secondary={
 									<ToggleButtonGroup exclusive value={status} onChange={toggleApplicationStatus(id)}>
 										<ToggleButton value="PENDING">
@@ -103,54 +103,46 @@ const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> =
 									</ToggleButtonGroup>
 								}
 							/>
-							
 						</ListItem>
 					);
 				})}
-			</List>
-		);
+		</List>
+	);
 
-		const Actions = () => (
-			<Button onClick={viewStudentsApplied} className={classes.button}>
-				More
-			</Button>
-		);
+	const Actions = () => (
+		<Button onClick={viewStudentsApplied} className={classes.button}>
+			More
+		</Button>
+	);
 
-		const ExtendedActions = () => (
-			<Button onClick={togglePressedButton} className={classes.button}>
-				Less
-			</Button>
-		);
+	const ExtendedActions = () => (
+		<Button onClick={togglePressedButton} className={classes.button}>
+			Less
+		</Button>
+	);
 
-		const domainName = domain.split('_').map(a => a.toLowerCase()).map(capitalizeFirstLetter).join(' ');
+	const domainName = domain
+		.split('_')
+		.map((a) => a.toLowerCase())
+		.map(capitalizeFirstLetter)
+		.join(' ');
 
-		return (
-			<Card className={classes.root} style={{ display: 'flex' }}>
-				<div style={{ width: '300px', display: 'flex', flexDirection: 'column' }}>
-					<CardHeader
-						title={positionName}
-						subheader={`${companyName} in ${domainName}`}
-					/>
+	return (
+		<Card className={classes.root} style={{ display: 'flex' }}>
+			<div style={{ width: '300px', display: 'flex', flexDirection: 'column' }}>
+				<CardHeader title={positionName} subheader={`${companyName} in ${domainName}`} />
+				<CardContent style={{ flexGrow: 1 }}>{description.slice(0, 500)}</CardContent>
+				<div style={{ flexGrow: 1 }} />
+				<CardActions>{extended ? <ExtendedActions /> : <Actions />}</CardActions>
+			</div>
+			{extended && (
+				<div>
 					<CardContent style={{ flexGrow: 1 }}>
-						{description.slice(0, 500)}
+						<Details />
 					</CardContent>
-					<div style={{ flexGrow: 1 }} />
-					<CardActions>
-						{
-							extended ? <ExtendedActions /> : <Actions />
-						}
-					</CardActions>
 				</div>
-				{
-					extended && <div>
-						<CardContent style={{ flexGrow: 1 }}>
-							<Details />
-						</CardContent>
-					</div>
-				}
-			</Card>
-		);
-	}
-;
-
+			)}
+		</Card>
+	);
+};
 export default InternshipRecruiterWidget;

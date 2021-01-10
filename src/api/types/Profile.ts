@@ -25,9 +25,8 @@ export enum ProfileSectionFieldKind {
 export type ProfileSectionEntry = {
 	id: number;
 	position: number;
-	data: ProfileSectionEntryData[]
+	data: ProfileSectionEntryData[];
 };
-
 
 export interface ProfileSectionEntryData {
 	name: string;

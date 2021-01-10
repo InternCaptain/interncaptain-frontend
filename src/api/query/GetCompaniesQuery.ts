@@ -21,5 +21,4 @@ export interface GetCompaniesData {
 	companies: CompanyConnection;
 }
 
-export interface GetCompaniesVars {
-}
+export interface GetCompaniesVars {}

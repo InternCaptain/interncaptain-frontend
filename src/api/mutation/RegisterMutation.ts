@@ -5,6 +5,7 @@ const RegisterMutation = gql`
 	mutation register($user: UserForCreateInput) {
 		register(input: $user) {
 			id
+			role
 			firstName
 			lastName
 			email

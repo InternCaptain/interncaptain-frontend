@@ -19,10 +19,8 @@ const PrivatePage: React.FC = (properties: any) => {
 
 	return (
 		<div>
-			<AppToolbar/>
-			<div style={{ padding: 20 }}>
-			{children}
-			</div>
+			<AppToolbar />
+			<div style={{ padding: 20 }}>{children}</div>
 		</div>
 	);
 };

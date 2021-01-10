@@ -40,14 +40,15 @@ const ProfileSectionWidget: React.FC<ProfileSectionWidgetProperties> = (properti
 		addEntry();
 	};
 
-	const handleUpdateEntry = (entry: ProfileSectionEntry, field: ProfileSectionField) => event => {
+	const handleUpdateEntry = (entry: ProfileSectionEntry, field: ProfileSectionField) => (event) => {
 		const { data } = entry;
 		const { name } = field;
 		const { value } = event.target;
-		data.map(item => {
+		data.map((item) => {
 			if (item.name === name) {
 				return {
-					name, value
+					name,
+					value
 				};
 			} else {
 				return item;
@@ -55,10 +56,11 @@ const ProfileSectionWidget: React.FC<ProfileSectionWidgetProperties> = (properti
 		});
 		updateEntry({
 			...entry,
-			data: data.map(item => {
+			data: data.map((item) => {
 				if (item.name === name) {
 					return {
-						name, value
+						name,
+						value
 					};
 				} else {
 					return item;
@@ -72,7 +74,7 @@ const ProfileSectionWidget: React.FC<ProfileSectionWidgetProperties> = (properti
 	};
 
 	const getValue = (entry: ProfileSectionEntry, field: ProfileSectionField) => {
-		return entry.data.find(data => data.name === field.name)!!.value;
+		return entry.data.find((data) => data.name === field.name)!!.value;
 	};
 
 	return (
@@ -81,44 +83,39 @@ const ProfileSectionWidget: React.FC<ProfileSectionWidgetProperties> = (properti
 			<CardContent>
 				<table className={classes.table}>
 					<thead>
-					<tr>
-						{fields.map((field) => (
-							<th key={field.name} className={classes.th}>
-								<Typography>{capitalizeFirstLetter(field.name)}</Typography>
+						<tr>
+							{fields.map((field) => (
+								<th key={field.name} className={classes.th}>
+									<Typography>{capitalizeFirstLetter(field.name)}</Typography>
+								</th>
+							))}
+							<th key={'button'} className={classes.th}>
+								<IconButton onClick={handleAddEntry} color="primary">
+									<Icon>add</Icon>
+								</IconButton>
 							</th>
-						))}
-						<th key={'button'} className={classes.th}>
-							<IconButton onClick={handleAddEntry} color="primary">
-								<Icon>add</Icon>
-							</IconButton>
-						</th>
-					</tr>
+						</tr>
 					</thead>
 					<tbody>
-					{
-						entries.map((entry) => (
+						{entries.map((entry) => (
 							<tr key={entry.position}>
-								{
-									fields.map((field) => (
-										<td key={field.name} className={classes.td}>
-											<TextField
-												value={getValue(entry, field)}
-												variant={'outlined'}
-												size={'small'}
-												onChange={handleUpdateEntry(entry, field)}
-											/>
-										</td>
-									))
-								}
+								{fields.map((field) => (
+									<td key={field.name} className={classes.td}>
+										<TextField
+											value={getValue(entry, field)}
+											variant={'outlined'}
+											size={'small'}
+											onChange={handleUpdateEntry(entry, field)}
+										/>
+									</td>
+								))}
 								<td className={classes.td}>
 									<IconButton onClick={handleDeleteEntry(entry)}>
 										<Icon>remove</Icon>
 									</IconButton>
 								</td>
 							</tr>
-
-						))
-					}
+						))}
 					</tbody>
 				</table>
 			</CardContent>

@@ -5,11 +5,11 @@ const GetCurrentUserQuery = gql`
 	query getCurrentUser {
 		currentUser {
 			id
+			role
 			firstName
 			lastName
 			email
 			profilePicture
-			role
 		}
 	}
 `;

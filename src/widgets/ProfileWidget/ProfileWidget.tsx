@@ -33,7 +33,7 @@ const ProfileWidget: React.FC<ProfileWidgetProperties> = (properties) => {
 
 	const { onSave, onRequestProfile, currentUser } = properties;
 	const [profile, setProfile] = useState(properties.profile);
-	const { sections } = profile;
+	const sections = profile === undefined ? [] : profile.sections;
 	const { id } = currentUser;
 
 	useEffect(() => {
@@ -73,7 +73,7 @@ const ProfileWidget: React.FC<ProfileWidgetProperties> = (properties) => {
 		const { entries } = section;
 		handleUpdateSection({
 			...section,
-			entries: entries.filter(item => item.position !== entry.position)
+			entries: entries.filter((item) => item.position !== entry.position)
 		});
 	};
 
@@ -84,20 +84,16 @@ const ProfileWidget: React.FC<ProfileWidgetProperties> = (properties) => {
 	return (
 		<div className={classes.form}>
 			<ProfileDescriptionWidget profile={profile} currentUser={currentUser} />
-			{
-				sections.map(section => (
-					<ProfileSectionWidget
-						key={section.name}
-						section={section}
-						addEntry={handleAddEntry(section)}
-						updateEntry={handleUpdate(section)}
-						deleteEntry={handleDelete(section)}
-					/>
-				))
-			}
-			<Button onClick={handleSave}>
-				Save
-			</Button>
+			{sections.map((section) => (
+				<ProfileSectionWidget
+					key={section.name}
+					section={section}
+					addEntry={handleAddEntry(section)}
+					updateEntry={handleUpdate(section)}
+					deleteEntry={handleDelete(section)}
+				/>
+			))}
+			<Button onClick={handleSave}>Save</Button>
 		</div>
 	);
 };
