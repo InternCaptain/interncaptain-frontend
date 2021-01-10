@@ -2,7 +2,13 @@ import React, { useEffect } from 'react';
 import InternshipWidget from './InternshipWidget';
 import { UserRole } from '../api/types/UserRole';
 import AppState from '../redux/AppState';
-import { fetchAddApplication, fetchApplications, fetchInternships, updateApplicationStatus } from '../redux/internship';
+import {
+	fetchAddApplication,
+	fetchApplications,
+	fetchInternships,
+	updateApplicationStatus,
+	updateInternshipQuery
+} from '../redux/internship';
 import { connect } from 'react-redux';
 import { Box } from '@material-ui/core';
 import User from '../api/types/User';
@@ -52,29 +58,29 @@ const InternshipList: React.FC<InternshipListProperties> = (props) => {
 
 	return (
 		<>
-		<Box>
-			{splitBy4(internships).map((list, index) => (
-				<Box key={`internships-row-${index}`} style={{ display: 'flex', justifyContent: 'center' }}>
-					{list.map((internship) => (
-						<InternshipWidget
-							key={`internship-${internship.id}`}
-							onExtend={() => {
-								onRequestApplications(internship.id);
-							}}
-							onSetApplicationStatus={(applicationId, newStatus) => {
-								onSetApplicationStatus(applicationId, newStatus);
-							}}
-							onAddApplication={(internshipId) => {
-								onAddApplication(internshipId, id)
-							}}
-							applications={filterApplications(internship.id)}
-							internship={internship}
-							role={UserRole.STUDENT}
-						/>
-					))}
-				</Box>
-			))}
-		</Box>
+			<Box>
+				{splitBy4(internships).map((list, index) => (
+					<Box key={`internships-row-${index}`} style={{ display: 'flex', justifyContent: 'center' }}>
+						{list.map((internship) => (
+							<InternshipWidget
+								key={`internship-${internship.id}`}
+								onExtend={() => {
+									onRequestApplications(internship.id);
+								}}
+								onSetApplicationStatus={(applicationId, newStatus) => {
+									onSetApplicationStatus(applicationId, newStatus);
+								}}
+								onAddApplication={(internshipId) => {
+									onAddApplication(internshipId, id);
+								}}
+								applications={filterApplications(internship.id)}
+								internship={internship}
+								role={UserRole.STUDENT}
+							/>
+						))}
+					</Box>
+				))}
+			</Box>
 		</>
 	);
 };
@@ -86,7 +92,10 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-	onRequestInternships: (recruiterId) => dispatch(fetchInternships(recruiterId)),
+	onRequestInternships: (recruiterId) => {
+		dispatch(updateInternshipQuery('recruiterId', recruiterId));
+		dispatch(fetchInternships());
+	},
 	onRequestApplications: (internshipId: number) => dispatch(fetchApplications({ internshipId })),
 	onSetApplicationStatus: (applicationId: number, newStatus: ApplicationStatus) => dispatch(updateApplicationStatus(applicationId, newStatus)),
 	onAddApplication: (internshipId: number, studentId: number) => dispatch(fetchAddApplication(internshipId, studentId))

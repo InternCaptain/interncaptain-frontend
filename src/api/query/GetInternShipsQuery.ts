@@ -34,5 +34,7 @@ export interface GetInternShipsData {
 export interface GetInternShipsVars {
 	where?: {
 		recruiterId?: number;
+		companyId?: number;
+		positionName?: string;
 	};
 }
