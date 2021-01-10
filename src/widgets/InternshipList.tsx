@@ -71,9 +71,7 @@ const InternshipList: React.FC<InternshipListProperties> = (props) => {
         onAddApplication(internshipId, id);
     };
 
-    return internships.length === 0 ? (
-        <LoadingWidget/>
-    ) : (
+    return (
         <>
             <Box>
                 {splitBy4(internships).map((list, index) => (

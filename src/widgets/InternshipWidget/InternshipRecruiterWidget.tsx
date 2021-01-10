@@ -130,8 +130,10 @@ const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> =
 	return (
 		<Card className={classes.root} style={{ display: 'flex' }}>
 			<div style={{ width: '300px', display: 'flex', flexDirection: 'column' }}>
-				<CardHeader title={positionName} subheader={`${companyName} in ${domainName}`} />
-				<CardContent style={{ flexGrow: 1 }}>{description.slice(0, 500)}</CardContent>
+				<CardHeader
+					title={positionName.substr(0, 18) + (positionName.length > 20 ? '...' : '')}
+					subheader={`${companyName} in ${domainName}`} />
+				<CardContent style={{ flexGrow: 1 }}>{description.substr(0, 120) + '...'}</CardContent>
 				<div style={{ flexGrow: 1 }} />
 				<CardActions>{extended ? <ExtendedActions /> : <Actions />}</CardActions>
 			</div>
