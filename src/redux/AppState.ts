@@ -1,11 +1,11 @@
 import { ThemeState } from './theme';
 import { UserState } from './user';
 import { InternshipState } from './internship';
-import { CVState } from './CV';
+import { ProfileState } from './profile';
 
 export default interface AppState {
 	themeState: ThemeState;
 	userState: UserState;
 	internshipState: InternshipState;
-	CVState: CVState;
+	profileState: ProfileState;
 }

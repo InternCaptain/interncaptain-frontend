@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ThemePicker from '../widgets/ThemePicker';
 import Users from '../widgets/Users';
 import PrivatePage from '../widgets/PrivatePage';
-import CVForm from '../widgets/CVForm';
+import ProfileWidget from '../widgets/ProfileWidget';
 import InternshipPage from '../widgets/InternshipsPage';
 
 interface PrivateRoutesProperties {}
@@ -14,10 +14,10 @@ const PrivateRoutes: React.FC<PrivateRoutesProperties> = (properties) => {
 		<PrivatePage>
 			<Switch>
 				<Route path="/Internships" exact component={InternshipPage} />
-				<Route path="/CVForm" exact component={CVForm} />
+				<Route path="/ProfileWidget" exact component={ProfileWidget} />
 				<Route path="/Users" exact component={Users} />
 				<Route path="/ThemePicker" exact component={ThemePicker} />
-				<Redirect path="/**" to={'/Internships'} />
+				<Redirect path="/**" to={'/ProfileWidget'} />
 			</Switch>
 		</PrivatePage>
 	);
