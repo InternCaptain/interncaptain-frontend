@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -13,7 +13,7 @@ import { CardHeader, Icon } from '@material-ui/core';
 import { green } from '../../themes/colors';
 import { Internship } from '../../api/types/Internship';
 import Application from '../../api/types/Application';
-import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { ApplicationStatus } from '../../api/types/ApplicationStatus';
 import { capitalizeFirstLetter } from '../../utils/utils';
 
@@ -45,7 +45,6 @@ const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> =
 	const { internship, applications, onExtend, onSetApplicationStatus } = props;
 
 	const [extended, setExtended] = useState(false);
-	const [width, setWidth] = useState('300px');
 
 	const {
 		company: { name: companyName },
@@ -53,10 +52,6 @@ const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> =
 		domain,
 		positionName
 	} = internship;
-
-	useEffect(() => {
-		extended ? setWidth('600px') : setWidth('300px');
-	}, [extended]);
 
 	const togglePressedButton = () => {
 		setExtended(!extended);
@@ -74,38 +69,38 @@ const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> =
 	const Details = () => (
 		<List dense className={classes.list}>
 			{applications &&
-				applications.map(({ student, status, id }) => {
-					const { firstName, lastName, profilePicture } = student;
-					const name = `${firstName} ${lastName}`;
+			applications.map(({ student, status, id }) => {
+				const { firstName, lastName, profilePicture } = student;
+				const name = `${firstName} ${lastName}`;
 
-					return (
-						<ListItem key={name} button>
-							<ListItemAvatar>
-								<Avatar src={profilePicture} />
-							</ListItemAvatar>
+				return (
+					<ListItem key={name} button>
+						<ListItemAvatar>
+							<Avatar src={profilePicture} />
+						</ListItemAvatar>
 
-							<ListItemText
-								primary={name}
-								secondary={
-									<ToggleButtonGroup exclusive value={status} onChange={toggleApplicationStatus(id)}>
-										<ToggleButton value="PENDING">
-											<Icon>pending</Icon>
-										</ToggleButton>
-										<ToggleButton value="UNDERCONSIDERATION">
-											<Icon>preview</Icon>
-										</ToggleButton>
-										<ToggleButton value="ACCEPTED">
-											<Icon>done</Icon>
-										</ToggleButton>
-										<ToggleButton value="REJECTED">
-											<Icon>close</Icon>
-										</ToggleButton>
-									</ToggleButtonGroup>
-								}
-							/>
-						</ListItem>
-					);
-				})}
+						<ListItemText
+							primary={name}
+							secondary={
+								<ToggleButtonGroup exclusive value={status} onChange={toggleApplicationStatus(id)}>
+									<ToggleButton value="PENDING">
+										<Icon>pending</Icon>
+									</ToggleButton>
+									<ToggleButton value="UNDERCONSIDERATION">
+										<Icon>preview</Icon>
+									</ToggleButton>
+									<ToggleButton value="ACCEPTED">
+										<Icon>done</Icon>
+									</ToggleButton>
+									<ToggleButton value="REJECTED">
+										<Icon>close</Icon>
+									</ToggleButton>
+								</ToggleButtonGroup>
+							}
+						/>
+					</ListItem>
+				);
+			})}
 		</List>
 	);
 
@@ -138,11 +133,9 @@ const InternshipRecruiterWidget: React.FC<InternshipRecruiterWidgetProperties> =
 				<CardActions>{extended ? <ExtendedActions /> : <Actions />}</CardActions>
 			</div>
 			{extended && (
-				<div>
-					<CardContent style={{ flexGrow: 1 }}>
-						<Details />
-					</CardContent>
-				</div>
+				<CardContent>
+					<Details />
+				</CardContent>
 			)}
 		</Card>
 	);

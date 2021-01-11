@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
@@ -43,11 +43,10 @@ const SearchCompany: React.FC<SearchCompanyProperties> = (props) => {
 			renderInput={(params) => (
 				<TextField
 					{...params}
-					label="Choose a company"
+					label="Company"
 					variant="outlined"
 					inputProps={{
-						...params.inputProps,
-						autoComplete: 'new-password' // disable autocomplete and autofill
+						...params.inputProps
 					}}
 				/>
 			)}

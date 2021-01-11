@@ -40,11 +40,10 @@ const SearchPosition = (props: SearchPositionProperties) => {
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    label="Choose a position"
+                    label="Position"
                     variant="outlined"
                     inputProps={{
-                        ...params.inputProps,
-                        autoComplete: 'new-password' // disable autocomplete and autofill
+                        ...params.inputProps
                     }}
                 />
             )}
